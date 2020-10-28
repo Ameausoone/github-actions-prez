@@ -2,13 +2,12 @@
 
 # Présentation
 
-![speaker](./assets/images/jf.jpg)
-![badge](./assets/images/gde.png)
+![speaker](./assets/images/ameausoone.png)
 
-## Jean-François Garreau
+## Antoine Méausoone
 
-### CTO front
+### Archi Cloud
 
-### @jefbinomed
+### @ameausoone
 
 ![company](./assets/images/logo_sfeir_bleu_orange.png)
