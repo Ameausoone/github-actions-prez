@@ -1,7 +1,8 @@
-##==##
-
+<!-- .slide: class="speaker-slide" -->
 # Github Actions
 
-CICD by Github
+Enfin des pipelines accessible aux développeurs
+
+Cloud Nord
 
 ![Github Actions's Log](./assets/images/github-actions-logo.png)
