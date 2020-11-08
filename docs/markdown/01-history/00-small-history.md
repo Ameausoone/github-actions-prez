@@ -4,15 +4,26 @@
 
 ##==##
 
-## First Jenkins
+# First Jenkins
 
 ![Jenkins Form](./assets/images/jks-create-job.png)
 
-Notes: D'abord on a eu Jenkins avec de l'intégration continue, et c'était déjà cool, puis on s'est dit, c'est cool maintenant on voudrait déployer sur la dév automatiquement. 
+Notes: D'abord on a eu Jenkins avec de l'intégration continue, et c'était déjà cool : on lance le build, on lance les test unitaires. Puis on s'est dit, c'est cool maintenant on voudrait déployer sur la dév automatiquement. 
 
 ##==##
 
-## Then plugins 
+# Then ... Shell !
+
+//TODO
+
+```shell script
+git ...
+```
+Notes: 
+
+##==##
+
+# Then plugins 
 
 ![Plugins](./assets/images/jks-rundeck-config.png)
 
@@ -24,16 +35,42 @@ Notes: OK là aussi c'est cool, mais maintenant on voudrait déployer sur la qa,
 
 ##==##
 
-## Then ... Pipeline As Code
+# And... Pipeline As Code
 
 * `Jenkinsfile`
 * `.travis.yml`
 * `.gitlab-ci.yml`
 
-Notes: ok maintenant je peux mettre des conditions, parser des variables d'environnement. 
+Notes: Ok maintenant je peux mettre des conditions, parser des variables d'environnement. Ajouter des conditions complexes, mais maintenant j'ai des pipelines complexes, et partager entre les projets et je commence à galérer à maintenir tout ça entre mes projets.
 
 ##==##
 
-## Then ... Shell !
+# So.. shared libraries and pipelines 
 
-Notes: 
+```yaml
+[...]
+include
+[...]
+```
+
+Notes: Pratique : on peut partager les librairies.
+
+##==##
+
+# But we need isolation !
+
+mmmm Docker !
+
+##==##
+
+# And finally developers get this ... 
+
+.gitlab-ci.yml
+``` 
+include:
+  - project: 'my-shared-libraries'
+    ref: master
+    file: 'complexe-pipeline.yml'
+``` 
+
+Notes: et donc ça devient complexe pour les développeurs, c'est difficile de rentrer dans les pipelines, 
