@@ -1,6 +1,6 @@
 <!-- .slide: class="transition-white sfeir-bg-red" -->
 
-# CI History 
+# a Small Pipeline History 
 
 ##==##
 
@@ -10,8 +10,8 @@
 
 Notes: D'abord on a eu Jenkins avec de l'intégration continue, et c'était déjà cool : on lance le build, on lance les test unitaires. Puis on s'est dit, c'est cool maintenant on voudrait déployer sur la dév automatiquement. 
 
+<!-- .slide: class="with-code" -->
 ##==##
-
 # Then ... Shell !
 
 //TODO

@@ -1,4 +1,4 @@
-<!-- .slide: class="speaker-slide" -->
+<!-- .slide: class="blue with-code" -->
 
 # CICD | Experiences
 

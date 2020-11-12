@@ -1,134 +1,226 @@
-# Fresh VM
-
-* Every pipeline runs on a fresh VM (Linux-Ubuntu, MacOS or Windows)
-
-* Then each step, run by default on VM or in docker image
-
-Notes: un pipeline démarre avec une VM fraiche à chaque pipeline, ensuite chaque step peut s'exécuter dans la VM ou dans une image docker. C'est un concept nouveau, couteux. Il est possible d'avoir des runners on premise, mais difficile à gérer. Mais qui a ses avantages. 
-
-##==##
-
-# Directory
-
-.github/workflows/<pipeline.yaml>
-
-Notes: Au lieu d'avoir un fichier à la racine du projet, on le déplace dans un répertoire, et on peut avoir x pipelines, un par fichier. C'est tout bête, mais ça permets d'écrire différents pipelines facilement. 
-
-##==##
-
-# Event 
-
-```yaml
-on: [push, pull_request]
-```
-
-Notes: Généralement l'event qui va déclencher un pipeline, ce sera le commit, puis on va mettre des conditions. Ici c'est différent, on va déclencher un pipeline sur un événement. Ici on a un exemple simple, mais..
-
-##==##
-
-# But.. 
-
-```yaml
-on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - feat/*
-  # Also trigger on page_build, as well as release created events
-  page_build:
-  release:
-    types: # This configuration does not affect the page_build event above
-      - created
-```
-
-Notes: Donc exemple ici, on va trigger notre pipeline uniquement si on pousse sur la branche master, ou sur une pullrequest dont la branche contient "feat/". Ou au moment où du html est poussé sur github pages, ou dernier exemple sur un type d'activité précis d'un événement : la création d'une release. Je ne vais pas énumérer tous les events disponibles. Mais c'est qquechose que j'ai trouvé très intéressant.  Comme par exemple, créer un pipeline de rebase.
-
-##==##
-
-# Ensuite le pipeline
-
-```yaml
-on:
-[...]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.0
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.0
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-```
-
-Notes: Alors ici simplement, vous avez le mot clé `jobs`. Et ensuite, vous pouvez indiquer un ou plusieurs pipelines, ici on a un simple pipeline. Il y a beaucoup d'options disponibles à chaque étape. Quelques exemples : ...
-
-##==##
-
-# Conditions
-
-```yaml
-jobs:
-  deploy: 
-    runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, 'deploy')
-    [...]
-```
-
-Notes:  vous pouvez mettre une condition sur un step ou sur le job complet, vous pouvez setter des variables d'environnements. Mais aussi...
-
-##==##
-
-# Matrix
-
-```yaml
-jobs:
-  build:
-    strategy:
-      matrix:
-        node: [6, 8, 10]
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-```
-
-Notes: Vous pouvez faire une matrice, par exemple de version de node. Je ne vais pas détailler ici toutes les options ici. Ce sont des fonctions intéressantes mais "classiques". Je préfère m'attarder sur la suite. Notamment sur les `steps`, et ce que l'on peut mettre dedans.
-
-##==##
-
-# Shell
+# Or ... a Github Action
 
 ```yaml
 steps:
-  - name: Create file
-    run: echo "Hello Cloud Nord" > cloud-nord.txt
+  - name: Checkout code
+    uses: actions/checkout@v2
+  - name: Install Node.js
+    uses: actions/setup-node@v1
 ```
 
-Notes: Donc ici via la command `run`, on peut exécuter du shell ou des scripts shell : simple, basique... 
+Notes: Il s'agit de déléguer une étape d'un pipeline a une github action. Qu'est-ce qu'une Github Action ? 
 
 ##==##
 
-# Docker
+# What is a Github Action ?
+
+// TODO add sketch note
+* Unit action
+* With Inputs and Outputs
+* Easily interact with Git and Github API 
+
+##==##
+
+# How to call a Github Action ? 
+
+//TODO add sketchnote
+actions/repo@
+
+##==##
+
+# "Builtin" actions
+
+Github provides a lot of actions
+// TODO add sketch note
+* `actions/checkout`
+* `actions/setup-java`
+* `actions/setup-node(|python|go|elixir|...)`
+* `github/super-linter` 
+Notes: Il y a bcp d'actions fournies par Github nativement. 
+
+##==##
+
+# Closer look to setup-*
+
+//TODO sketch note
+* `actions/setup-*` will install bin in host
+* So you can install differents components in the same context|host
+
+##==##
+
+# Or more High level
+
+* `actions/upload-artifact` / `actions/download-artifact` 
+* `actions/create-release`
+* `actions/github-script`
+
+Notes: D'autres exemples de github actions, comme github-script. Un petit focus sur github-script. 
+
+##==##
+
+# github-script... an example
 
 ```yaml
+on:
+  issues:
+    types: [opened]
 jobs:
-  in-container:
+  comment:
     runs-on: ubuntu-latest
-    container: node:10.16-jessie
     steps:
-      - name: Run in container
-        run: |
-          echo This job does specify a container.
-          echo It runs in the container instead of the VM.
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
 ```
 
-Notes: Donc on peut également jouer une étape dans une container docker. Mais le plus intéressant.
+Notes: github-script permets d'intéragir avec l'api Github très simplement. github-script inject un client github authentifié avec Github Token. Par exemple, ici on va réagir à la création d'une nouvelle issue, à laquelle on va rajouter un commentaire. 
 
+##==##
+
+# Or by the community...
+
+You can develop your own Github action !!!
+
+##==##
+
+# Two ways :
+
+* Javascript action (also Typescript)
+* Or Container action
+* Github provides templates
+
+Notes: Il existe des templates pour ne pas partir de zéro.
+
+##==##
+
+# Javascript action
+
+* Run natively on host
+* Perfect for interact with Github API (others API also)
+* For High-level action
+* Recommended choice
+* Template : [actions/javascript-action](https://github.com/actions/javascript-action)
+
+##==##
+
+# Two (main) npm libraries
+
+* @actions/core => to interact with Github action workflow(inputs,env var, etc)
+* @action/github => to interact with Github API
+
+##==##
+
+# Container action
+
+* Based on a docker image + your shell script
+* Very easy to start with
+* Only compatible with Linux Host
+* A fewer longer to start
+* Interact with workflow by shell api
+* Template : [actions/container-action](https://github.com/actions/container-action)
+
+##==##
+
+# Some examples : Vault-action
+
+[hashicorp/vault-action](https://github.com/hashicorp/vault-action)
+
+> A helper action for easily pulling secrets from HashiCorp Vault™.
+
+```yaml
+# ...
+- name: Import Secrets
+  uses: hashicorp/vault-action@v2.0.1
+  with:
+    url: https://vault.mycompany.com:8200
+    token: ${{ secrets.VaultToken }}
+    secrets: |
+        secret/data/ci/aws accessKey | AWS_ACCESS_KEY_ID ;
+        secret/data/ci/aws secretKey | AWS_SECRET_ACCESS_KEY ;
+        secret/data/ci npm_token
+# ...
+``` 
+
+Notes: Développé initialement par [RichiCoder1](https://github.com/richicoder1) puis repris par Hashicorp. Une action simple, bien testé, bien documenté.
+
+##==##
+
+# Another one : github-slug-action
+
+[rlespinasse/github-slug-action](https://github.com/rlespinasse/github-slug-action)
+
+> This GitHub Action will expose the slug value of all GitHub environment variables inside your GitHub workflow.
+
+```yaml
+- name: Inject slug/short variables
+  uses: rlespinasse/github-slug-action@v3.x
+
+- name: Print slug/short variables
+  run: |
+    echo "Slug variables"
+    # ...
+    echo "   head ref   : ${{ env.GITHUB_HEAD_REF_SLUG }}"
+    // print : "   head ref   : feat-ready-to-url"
+    # ...
+```
+
+Notes: Autre exemple : cette github action prends en entrée les variables d'environnement de Github, et va les transformer pour les utiliser dans votre pipeline, par exemple pour créer un service qui va prendre le nom d'une branche dans l'url. Alors maintenant que l'on a développé notre Github action ce serait bien de pouvoir la partager. 
+
+##==##
+
+# Marketplace
+
+![marketplace](./assets/images/marketplace.png)
+
+Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace.
+
+##==##
+
+# Security 
+
+> Github Action : the 'S' stands for security.
+
+##==##
+
+# The "left-pad" effect
+
+* What happens if an owner delete his action ?
+
+* A "archived" repo still works
+* Use well-known Github action
+* Fork it in your org
+
+##==##
+
+# The "event-stream" effect
+
+* What happens if an owner mine bitcoin with his action ?
+
+* Use commitId as reference: 
+
+```yaml
+- uses: rlespinasse/github-slug-action@cc560ad
+```
+
+* Dependabot will even make PR with most recent commitId
+
+##==##
+
+# Use dependabot
+
+`.github/dependabot.yml`
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+```
