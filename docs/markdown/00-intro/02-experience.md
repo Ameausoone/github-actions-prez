@@ -1,5 +1,3 @@
-<!-- .slide: class="blue with-code" -->
-
 # CICD | Experiences
 
 * Hudson

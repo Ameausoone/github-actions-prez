@@ -1,4 +1,8 @@
-## CICD by Github
+<!-- .slide: class="transition-white sfeir-bg-red" -->
+
+
+
+# Github Actions : CICD by Github
 
 ![Github Actions's Log](./assets/images/github-actions-logo.png)
 

@@ -1,4 +1,10 @@
-# Or ... a Github Action
+<!-- .slide: class="transition-white sfeir-bg-red" -->
+
+# Or ... a "Github Action"
+
+##==##
+
+# Use a Github Action
 
 ```yaml
 steps:
@@ -8,7 +14,7 @@ steps:
     uses: actions/setup-node@v1
 ```
 
-Notes: Il s'agit de déléguer une étape d'un pipeline a une github action. Qu'est-ce qu'une Github Action ? 
+Notes: Il s'agit de déléguer une étape d'un pipeline a une github action, et c'est là que Github action devient très intéressant..... Alors, qu'est-ce qu'une Github Action ? 
 
 ##==##
 
@@ -182,7 +188,7 @@ Notes: que je n'ai pas pris au hasard, puisque j'ai contribué sur ces actions. 
     # ...
 ```
 
-Notes: Autre exemple : développer par mon collègue Romain Lespinasse. Cette github action prends en entrée les variables d'environnement de Github, et va les transformer pour les utiliser dans votre pipeline, par exemple pour créer un service qui va prendre le nom d'une branche dans l'url. Alors maintenant que l'on a développé notre Github action ce serait bien de pouvoir la partager. 
+Notes: Autre exemple : développer par mon collègue Romain Lespinasse. Cette github action prends les variables d'environnement fourni Github, et va les transformer pour pouvoir les utiliser dans votre pipeline, par exemple pour créer un service qui va prendre le nom d'une branche dans l'url. ... Alors maintenant que l'on a développé notre Github action ce serait bien de pouvoir la partager. 
 
 ##==##
 
@@ -190,13 +196,23 @@ Notes: Autre exemple : développer par mon collègue Romain Lespinasse. Cette gi
 
 ![marketplace](./assets/images/marketplace.png)
 
-Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une fois votre action créé, vous pouvez la proposer sur la Marketplace de Github. 
+Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une fois votre action créé, vous pouvez la proposer sur la Marketplace de Github. Github fait remonter dans la liste les actions qui ont le plus d'étoiles, donc n'hésitez pas à ajouter un like quand vous utilisez un pipeline. Pour info, une action n'a pas besoin d'être sur le marketplace pour être utilisable dans votre pipeline. 
+
+##==##
+
+# Other examples
+
+* [github.com/google-github-actions](https://github.com/google-github-actions)
+* [github.com/Azure/actions](https://github.com/Azure/actions)
+* [github.com/aws-actions](https://github.com/aws-actions)
 
 ##==##
 
 # Security 
 
 > Github Action : the 'S' stands for security.
+
+Notes: Github action est donc très pratique, mais n'est pas exempt de défaut, notamment niveau sécurité, on va voir 2 problèmes notamment.
 
 ##==##
 
@@ -207,6 +223,8 @@ Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une f
 * A "archived" repo still works
 * Use well-known Github action
 * Fork it in your org
+
+Notes: que se passe-t-il si le propriétaire supprime une action. ça ne fonctionne plus, si l'action est critique pour vous est qu'elle peut être susceptible d'être supprimé, faites en fork.  
 
 ##==##
 
@@ -222,6 +240,8 @@ Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une f
 
 * Dependabot will even make PR with most recent commitId
 
+Notes: Plus pervers que se passe-t-il si le propriétaire d'une action, mets à jour son action pour miner du bitcoin sur vos runners, si vous utilisez la branche par défaut, ou une branche, ou même un tag. Solution : dans ce cas, vous pouvez utiliser le commitId, le court ou le long. Dans ce cas, vous êtes sûr d'utiliser une version fixe de la github action. 
+
 ##==##
 
 # Use dependabot
@@ -235,3 +255,13 @@ updates:
     schedule:
       interval: "daily"
 ```
+
+Notes: Et vous pouvez même utiliser dependabot, pour maintenir vos github actions à jour  ! 
+
+##==##
+
+# Thx !
+
+##==##
+
+# Questions ? 

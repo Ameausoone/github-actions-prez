@@ -12,7 +12,7 @@ Notes: un pipeline démarre avec une VM fraiche à chaque pipeline, ensuite chaq
 
 ```shell script
 .github/workflows/<pipeline.yaml>
-``` 
+```
 
 Notes: Au lieu d'avoir un fichier à la racine du projet, on le déplace dans un répertoire, et on peut avoir x pipelines, un par fichier. C'est tout bête, mais ça permets d'écrire différents pipelines facilement, au lieu de tout avoir dans un seul fichier, à coup de conditions.
 
@@ -52,7 +52,7 @@ Notes: Donc exemple ici, on va déclencher notre pipeline uniquement si on pouss
 
 ##==##
 
-# Ensuite le pipeline
+# Next... pipeline
 
 ```yaml
 on:
