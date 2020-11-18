@@ -2,7 +2,7 @@
 
 # Hello Cloud Nord 
 
-![speaker](./assets/images/ameausoone.png)
+![speaker](./assets/images/ameausoone.jpg)
 ![company](./assets/images/logo_sfeir_bleu_orange.png)
 
 ## Antoine Méausoone

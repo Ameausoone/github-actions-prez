@@ -10,16 +10,14 @@ Notes: un pipeline démarre avec une VM fraiche à chaque pipeline, ensuite chaq
 
 # Directory
 
-```shell script
 .github/workflows/<pipeline.yaml>
-```
 
 Notes: Au lieu d'avoir un fichier à la racine du projet, on le déplace dans un répertoire, et on peut avoir x pipelines, un par fichier. C'est tout bête, mais ça permets d'écrire différents pipelines facilement, au lieu de tout avoir dans un seul fichier, à coup de conditions.
 
 ##==##
 
 # Event 
-
+<!-- .slide: class="big-code" -->
 ```yaml
 on: [push, pull_request]
 ```
@@ -28,8 +26,8 @@ Notes: Généralement l'event qui va déclencher un pipeline, ce sera le commit,
 
 ##==##
 
-# But.. 
-
+# But.. Not only
+<!-- .slide: class="big-code" -->
 ```yaml
 on:
   # Trigger the workflow on push or pull request,
@@ -48,12 +46,12 @@ on:
       - created
 ```
 
-Notes: Donc exemple ici, on va déclencher notre pipeline uniquement si on pousse sur la branche master, ou sur une pullrequest dont la branche contient "feat/". Ou quand un commentaire est ajouté sur une issue, ou dernier exemple sur un type d'activité précis d'un événement : la création d'une release. Je ne vais pas énumérer tous les events disponibles. Mais c'est qquechose que j'ai trouvé très intéressant.  Comme par exemple, créer un pipeline de rebase.
+Notes: Mais pas uniquement, ici on va déclencher notre pipeline uniquement si on pousse sur la branche master, ou sur une pullrequest dont la branche contient "feat/". Ou quand un commentaire est ajouté sur une issue, ou dernier exemple sur un type d'activité précis d'un événement : la création d'une release. Je ne vais pas énumérer tous les events disponibles. Mais c'est qquechose que j'ai trouvé très intéressant.  Comme par exemple, créer un pipeline de rebase.
 
 ##==##
 
 # Next... pipeline
-
+<!-- .slide: class="big-code" -->
 ```yaml
 on:
 [...]

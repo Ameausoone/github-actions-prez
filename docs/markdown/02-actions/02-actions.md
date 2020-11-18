@@ -1,11 +1,13 @@
-<!-- .slide: class="transition-white sfeir-bg-red" -->
+<!-- .slide: class="transition sfeir-bg-red" -->
 
 # Or ... a "Github Action"
+
+Notes: 19:33:20
 
 ##==##
 
 # Use a Github Action
-
+<!-- .slide: class="big-code" -->
 ```yaml
 steps:
   - name: Checkout code
@@ -30,8 +32,8 @@ Notes: C'est une action unitaire, avec des valeurs en entrées, qui a accès au 
 ##==##
 
 # How to call a Github Action ? 
-
-//TODO add sketchnote
+<!-- .slide: class="full-center" -->
+![call](./assets/images/call-an-action.png)
 
 Notes: Pour utiliser une github action, il suffit de référencer le repo, par défaut, ça utilise la branche par défaut, mais on peut spécifier une autre branche, un tag, ou un commitId, on va voir plus loin l'intérêt que ça a. ... Alors Github fourni une série de Github action
 
@@ -40,18 +42,30 @@ Notes: Pour utiliser une github action, il suffit de référencer le repo, par d
 # "Builtin" actions
 
 Github provides a lot of actions
-* `actions/checkout`
-* `actions/setup-java`
-* `actions/setup-node(|python|go|elixir|...)`
-* `github/super-linter` 
+- [actions/checkout](https://github.com/actions/checkout) - Setup your repository on your workflow.
+- [actions/cache](https://github.com/actions/cache) - Cache dependencies and build outputs in GitHub Actions.
+- [github/super-linter](https://github.com/github/super-linter) - Linter for a lot of languages
 
 Notes: Il y a bcp d'actions fournies par Github nativement. Notamment pour installer vos dépendances, pour java, node, python etc. Il y a également un linter. Je vais faire un petit focus sur le fonctionnement des actions "setup-" 
 
 ##==##
+# "Setup" Actions
+
+- [actions/setup-node: Node.js](https://github.com/actions/setup-node)
+- [actions/setup-python: Python](https://github.com/actions/setup-python)
+- [actions/setup-go: Go](https://github.com/actions/setup-go)
+- [actions/setup-dotnet: .NET core sdk](https://github.com/actions/setup-dotnet)
+- [actions/setup-haskell: Haskell (GHC and Cabal)](https://github.com/actions/setup-haskell)
+- [actions/setup-java: Java](https://github.com/actions/setup-java)
+- [actions/setup-ruby: Ruby](https://github.com/actions/setup-ruby)
+- [actions/setup-elixir: Elixir](https://github.com/actions/setup-elixir)
+- [fabasoad/setup-cobol-action: Cobol 😅](https://github.com/fabasoad/setup-cobol-action)
+
+##==##
 
 # Closer look to setup-*
-
-//TODO sketch note
+<!-- .slide: class="full-center" -->
+![call](./assets/images/setup-action.png)
 
 Notes: C'est une convention dans les actions github, une action setup- va installer l'application directement sur le host, avec la version que vous avez choisi, et vous pouvez du coup cumuler facilement différentes versions d'outils.
 
@@ -59,16 +73,16 @@ Notes: C'est une convention dans les actions github, une action setup- va instal
 
 # Or more High level
 
-* `actions/upload-artifact` / `actions/download-artifact` 
-* `actions/create-release`
-* `actions/github-script`
+- [actions/upload-artifact](https://github.com/actions/upload-artifact) - Upload artifacts from your workflow.
+- [actions/download-artifact](https://github.com/actions/download-artifact) - Download artifacts from your build.
+- [actions/github-script](https://github.com/actions/github-script) - Write a script for GitHub API and the workflow contexts.
 
 Notes: D'autres exemples de github actions: comme upload artifact, download-artifact. Create release qui comme son nom l'indique qui va créer une release github ou comme github-script. Un petit focus sur github-script. 
 
 ##==##
 
 # github-script... an example
-
+<!-- .slide: class="big-code" -->
 ```yaml
 on:
   issues:
@@ -93,11 +107,22 @@ Notes: github-script permets d'intéragir avec l'api Github très simplement. gi
 
 ##==##
 
+# Github Automation
+
+- [actions/create-release](https://github.com/actions/create-release) - An Action to create releases via the GitHub Release API.
+- [actions/upload-release-asset](https://github.com/actions/upload-release-asset) - An Action to upload a release asset via the GitHub Release API.
+- [actions/first-interaction](https://github.com/actions/first-interaction) - An action for filtering pull requests and issues from first-time contributors.
+- [actions/stale](https://github.com/actions/stale) - Marks issues and pull requests that have not had recent interaction.
+- [actions/labeler](https://github.com/actions/labeler) - An action for automatically labelling pull requests.
+- [actions/delete-package-versions](https://github.com/actions/delete-package-versions) - Delete versions of a package from GitHub Packages.
+
+##==##
+
 # Or by the community...
 
 You can develop your own Github action !!!
 
-Notes: et donc c'est là où Github Actions devient très intéressant, on peut développer ses propres Github action ! ... 2 possibilités
+Notes: 28:26:40 et donc c'est là où Github Actions devient très intéressant, on peut développer ses propres Github action ! ... 2 possibilités
 
 ##==##
 
@@ -150,7 +175,7 @@ Notes: il existe également un template pour faire une action basée sur un cont
 [hashicorp/vault-action](https://github.com/hashicorp/vault-action)
 
 > A helper action for easily pulling secrets from HashiCorp Vault™.
-
+<!-- .slide: class="big-code" -->
 ```yaml
 # ...
 - name: Import Secrets
@@ -200,19 +225,20 @@ Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une f
 
 ##==##
 
-# Other examples
+# Collections of Github Actions
 
 * [github.com/google-github-actions](https://github.com/google-github-actions)
 * [github.com/Azure/actions](https://github.com/Azure/actions)
 * [github.com/aws-actions](https://github.com/aws-actions)
+* [sdras/awesome-actions](https://github.com/sdras/awesome-actions) - A curated list of awesome actions to use on GitHub
 
 ##==##
-
+<!-- .slide: class="transition sfeir-bg-red" -->
 # Security 
 
-> Github Action : the 'S' stands for security.
+Github Action : the 'S' stands for Security.
 
-Notes: Github action est donc très pratique, mais n'est pas exempt de défaut, notamment niveau sécurité, on va voir 2 problèmes notamment.
+Notes: 36:26:40 Github action est donc très pratique, mais n'est pas exempt de défaut, notamment niveau sécurité, on va voir 2 problèmes notamment.
 
 ##==##
 
@@ -259,9 +285,9 @@ updates:
 Notes: Et vous pouvez même utiliser dependabot, pour maintenir vos github actions à jour  ! 
 
 ##==##
-
+<!-- .slide: class="transition sfeir-bg-red" -->
 # Thx !
 
 ##==##
-
+<!-- .slide: class="transition sfeir-bg-red" -->
 # Questions ? 

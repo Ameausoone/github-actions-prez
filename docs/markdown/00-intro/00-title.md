@@ -1,8 +1,6 @@
-<!-- .slide: class="first-slide" sfeir-level="2" sfeir-techno="github actions" -->
+<!-- .slide: data-background="./assets/images/template_diapo_png.png" class="transition" -->
 # **Github Actions**
 
-Enfin des pipelines accessible aux développeurs
-
-![Github Actions's Log](./assets/images/github-actions-logo.png)
+![Github Actions's Log](./assets/images/github-actions-logo.png) Enfin des pipelines accessible aux développeurs
 
 Notes: Bonjour à tous, bienvenue à ce talk sur Github Actions. Je vais commencer par me présenter : 

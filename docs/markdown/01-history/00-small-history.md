@@ -1,34 +1,20 @@
-<!-- .slide: class="transition-white sfeir-bg-red" -->
+<!-- .slide: class="transition sfeir-bg-red" -->
 
 # a Small Pipeline History 
 
-Notes: Alors je voulais centrer ma présentation sur l'expérience que les développeurs, et comment Github Actions, à mon avis, facilite le travail des dév et des DevOps. Pour comprendre l'expérience actuel que les développeurs ont avec la CICD, je voulais d'abord refaire un petit historique de la CICD de ses 10 dernière années, et j'aimerais savoir si vous l'avez ressenti comme moi ? 
+Notes: 1:46:40 Alors je voulais centrer ma présentation sur l'expérience que les développeurs, et comment Github Actions, à mon avis, facilite le travail des dév et des DevOps. Pour comprendre l'expérience actuel que les développeurs ont avec la CICD, je voulais d'abord refaire un petit historique de la CICD de ses 10 dernière années, et j'aimerais savoir si vous l'avez ressenti comme moi ? 
 
 ##==##
-
+<!-- .slide: class="full-center" -->
 # First Jenkins
 
 ![Jenkins Form](./assets/images/jks-create-job.png)
 
 Notes: D'abord on a eu Jenkins avec de l'intégration continue, et c'était déjà cool : on commit, ça lance le build, les tests unitaires, automatiquement ! ça devenait vraiment intéressant de faire des tests unitaires. Puis on s'est dit, c'est cool maintenant on voudrait automatiser les prochaines étapes, comme déployer sur la dév par exemple.
 
-<!-- .slide: class="with-code" -->
-##==##
-# Then ... Shell !
-
-```shell script
-wget -qO- http://google.com/ |
-grep -Eoi '<a [^>]+>' | 
-grep -Eo 'href="[^\"]+"' | 
-grep -Eo '(http|https)://[^/"]+'
-``` 
-
-Notes: Alors on a souvent ajouté du shell, pour parser du texte, extraire un commit, urlisé une branche, etc. Avec une couche de jq, de regex, et de curl, et quand un dév avait un bug là dedans, bon on appelle son devops préféré, parce que évidemment, c'est lui qui maîtrise. ...Alors pour nous faciliter, on a commencé à avoir des plugins...
-
 ##==##
 
 # Then plugins 
-
 ![Plugins](./assets/images/jks-rundeck-config.png)
 
 * Rundeck
@@ -48,9 +34,22 @@ Notes: OK là aussi c'est cool, ça nous facilite la vie, on a toutes les option
 Notes: Ok on va écrire notre pipeline, et maintenant je peux mettre des conditions, parser des variables d'environnement en groovy. Ajouter des conditions complexes mieux intégré. Alors encore une fois c'est cool mais maintenant j'ai des pipelines complexes, mais pour les maintenir sur tous mes projets, ça commence à être galére. ...Du coup, 
 
 ##==##
+# And ... Shell !
+<!-- .slide: class="big-code" -->
+
+```shell script
+wget -qO- http://mywebsite.com/ |
+grep -Eoi '<a [^>]+>' | 
+grep -Eo 'href="[^\"]+"' | 
+grep -Eo '(http|https)://[^/"]+'
+``` 
+
+Notes: Alors on a souvent ajouté du shell, pour parser du texte, extraire un commit, urlisé une branche, etc. Avec une couche de jq, de regex, et de curl, et quand un dév avait un bug là dedans, bon on appelle son devops préféré, parce que évidemment, c'est lui qui maîtrise. ...Alors pour nous faciliter, on a commencé à avoir des plugins...
+
+##==##
 
 # So.. shared libraries and pipelines 
-
+<!-- .slide: class="big-code" -->
 ```yaml
 [...]
 include
@@ -70,9 +69,9 @@ Notes: on va faire tourner nos jobs dans des conteneurs docker, du coup, on a pl
 ##==##
 
 # And finally developers get this ... 
-
+<!-- .slide: class="big-code" -->
 .gitlab-ci.yml
-``` 
+```yaml
 include:
   - project: 'my-shared-libraries'
     ref: master

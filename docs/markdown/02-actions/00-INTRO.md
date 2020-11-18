@@ -1,12 +1,10 @@
-<!-- .slide: class="transition-white sfeir-bg-red" -->
-
-
+<!-- .slide: class="transition sfeir-bg-red" -->
 
 # Github Actions : CICD by Github
 
 ![Github Actions's Log](./assets/images/github-actions-logo.png)
 
-Notes: et là dessus arrive Github Actions.
+Notes: 8:53:20 et là dessus arrive Github Actions.
 
 ##==##
 
