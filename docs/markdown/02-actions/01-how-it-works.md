@@ -1,3 +1,8 @@
+<!-- .slide: class="transition sfeir-bg-red" -->
+# How does it work ? 
+
+##==##
+
 # Fresh VM
 
 * Every pipeline runs on a fresh VM (Linux-Ubuntu, MacOS or Windows)

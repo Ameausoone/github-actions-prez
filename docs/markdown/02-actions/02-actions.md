@@ -117,7 +117,7 @@ Notes: github-script permets d'intéragir avec l'api Github très simplement. gi
 - [actions/delete-package-versions](https://github.com/actions/delete-package-versions) - Delete versions of a package from GitHub Packages.
 
 ##==##
-
+<!-- .slide: class="transition sfeir-bg-red" -->
 # Or by the community...
 
 You can develop your own Github action !!!
@@ -223,6 +223,13 @@ Notes: Autre exemple : développer par mon collègue Romain Lespinasse. Cette gi
 
 Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une fois votre action créé, vous pouvez la proposer sur la Marketplace de Github. Github fait remonter dans la liste les actions qui ont le plus d'étoiles, donc n'hésitez pas à ajouter un like quand vous utilisez un pipeline. Pour info, une action n'a pas besoin d'être sur le marketplace pour être utilisable dans votre pipeline. 
 
+##==##
+
+# [Starter-workflows](https://github.com/actions/starter-workflows)
+
+![marketplace](./assets/images/starter-workflows.png)
+
+Notes: Github fourni également des workflow basiques, c'est directement intégré dans l'interface de Github, quand vous voulez créer un pipeline sur le site. Et vous pouvez même y contribuer, c'est un repo ! 
 ##==##
 
 # Collections of Github Actions
