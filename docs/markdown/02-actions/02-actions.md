@@ -230,6 +230,7 @@ Notes: Vous pouvez ensuite exposer votre Github Action sur la marketplace, une f
 ![marketplace](./assets/images/starter-workflows.png)
 
 Notes: Github fourni également des workflow basiques, c'est directement intégré dans l'interface de Github, quand vous voulez créer un pipeline sur le site. Et vous pouvez même y contribuer, c'est un repo ! 
+
 ##==##
 
 # Collections of Github Actions
@@ -238,6 +239,14 @@ Notes: Github fourni également des workflow basiques, c'est directement intégr
 * [github.com/Azure/actions](https://github.com/Azure/actions)
 * [github.com/aws-actions](https://github.com/aws-actions)
 * [sdras/awesome-actions](https://github.com/sdras/awesome-actions) - A curated list of awesome actions to use on GitHub
+
+##==##
+
+# But Jenkins has plugins 
+
+* Github Action are way more lightweight
+* It is not attached to an instance
+* You can develop it in any language
 
 ##==##
 <!-- .slide: class="transition sfeir-bg-red" -->
@@ -273,8 +282,8 @@ Notes: que se passe-t-il si le propriétaire supprime une action. ça ne fonctio
 
 * Dependabot will even make PR with most recent commitId
 
-Notes: Plus pervers que se passe-t-il si le propriétaire d'une action, mets à jour son action pour miner du bitcoin sur vos runners, si vous utilisez la branche par défaut, ou une branche, ou même un tag. Solution : dans ce cas, vous pouvez utiliser le commitId, le court ou le long. Dans ce cas, vous êtes sûr d'utiliser une version fixe de la github action. 
-
+Notes: Plus pervers : que se passe-t-il si le propriétaire d'une action, mets à jour son action pour miner du bitcoin sur vos runners, si vous utilisez la branche par défaut, ou une branche, ou même un tag. Solution : dans ce cas, vous pouvez utiliser le commitId, le court ou le long. Dans ce cas, vous êtes sûr d'utiliser une version fixe de la github action. 
+ 
 ##==##
 
 # Use dependabot
@@ -290,6 +299,56 @@ updates:
 ```
 
 Notes: Et vous pouvez même utiliser dependabot, pour maintenir vos github actions à jour  ! 
+
+##==##
+
+# Checkout
+
+```yaml
+- uses: actions/checkout@v2
+  with:
+    # default : true
+    persist-credentials: false
+```
+
+Notes: Par défaut, quand l'action checkout fait un clone de votre repo, la configuration git du workspace permets d'exécuter des commandes git authentifié, donc si vous n'en avez pas besoin d'effectuer, n'hésitez pas à utiliser l'option persist-credentials, pour que votre code soit en "lecture seule".
+
+##==##
+
+# Secrets
+
+* Set secrets in your repo settings and inject them in your pipeline.
+
+```yaml
+steps:
+  - name: Hello world action
+    with: # Set the secret as an input
+      super_secret: ${{ secrets.SuperSecret }}
+    env: # Or as an environment variable
+      super_secret: ${{ secrets.SuperSecret }}
+```
+
+Notes: Il y a une gestion des secrets, le principe est assez simple vous spécifiez vos secrets dans les settings de votre repo, puis vous les injecter dans votre pipeline. Automatiquement les secrets seront masqués dans les logs.  
+
+##==##
+
+# GITHUB_TOKEN
+
+```yaml
+name: Pull request labeler
+on:
+- pull_request
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v2
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Notes: pour intéragir avec l'api github, vous avez un TOKEN qui est injecté dans votre pipeline, pour une durée limitée. Pour les PR de repos forké,
+le TOKEN a des droits read only. 
 
 ##==##
 <!-- .slide: class="transition sfeir-bg-red" -->
